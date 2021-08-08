@@ -11,6 +11,11 @@
       "executablePath": "dotnet",
       "commandLineArgs": "$(tMLServerPath)",
       "workingDirectory": "$(TerrariaSteamPath)"
+    },
+    "TerrariaDebug": {
+      "commandName": "Executable",
+      "executablePath": "tModLoader.dll",
+      "workingDirectory": "$(TerrariaSteamPath)"
     }
   }
 }
