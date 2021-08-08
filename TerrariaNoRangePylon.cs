@@ -1,3 +1,4 @@
+using System.Reflection;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Terraria;
@@ -14,6 +15,9 @@ namespace TerrariaNoRangePylon
 		{
 			On.Terraria.GameContent.TeleportPylonsSystem.IsPlayerNearAPylon += OnPlayerNearAPylon; 
 			IL.Terraria.GameContent.TeleportPylonsSystem.HandleTeleportRequest += ILTeleportRequestInRange;
+			
+			if (true)
+				IL.Terraria.GameContent.TeleportPylonsSystem.DoesPylonHaveEnoughNPCsAroundIt += ILPylonEnoughNPCs;
 		}
 
 		private void ILTeleportRequestInRange(ILContext il)
@@ -58,6 +62,44 @@ namespace TerrariaNoRangePylon
 		private bool OnPlayerNearAPylon(OnTeleportPylonsSystem.orig_IsPlayerNearAPylon orig, Player player)
 		{
 			return true;
+		}
+		
+		private void ILPylonEnoughNPCs(ILContext il)
+		{
+			/*
+			 * IL_0036: ldc.i4.2
+			 * IL_0037: div
+			 * IL_0038: sub
+			 * IL_0039: ldsfld    int32 Terraria.Main::buffScanAreaWidth
+			 * IL_003E: ldsfld    int32 Terraria.Main::buffScanAreaHeight
+			 * IL_0043: call      instance void [FNA]Microsoft.Xna.Framework.Rectangle::.ctor(int32, int32, int32, int32)
+			 * IL_0048: ldarg.2
+			 * IL_0049: stloc.2
+			 * <===>
+			 * INSERT:  ldc.i4.0
+			 * INSERT:  stloc.2
+			 * <===>
+			 * IL_004A: ldc.i4.0
+			 */
+			
+			
+			ILCursor c = new(il);
+
+			if (!c.TryGotoNext(MoveType.After,
+				i => i.MatchLdcI4(2),
+				i => i.MatchDiv(),
+				i => i.MatchSub(),
+				i => i.MatchLdsfld(typeof(Main).GetField("buffScanAreaWidth", BindingFlags.Static | BindingFlags.Public)),
+				i => i.MatchLdsfld(typeof(Main).GetField("buffScanAreaHeight", BindingFlags.Static | BindingFlags.Public)),
+				i => i.MatchCall(out _),
+				i => i.MatchLdarg(2),
+				i => i.MatchStloc(2))) {
+				Logger.Warn("Failed to apply IL to DoesPylonHaveEnoughNPCsAroundIt");
+				return;
+			}
+
+			c.Emit(OpCodes.Ldc_I4_0);
+			c.Emit(OpCodes.Stloc_2);
 		}
 	}
 }
