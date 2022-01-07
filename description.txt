@@ -2,5 +2,6 @@ This mod makes it so that you can teleport to a pylon without needing to be near
 
 You can see this mod's source code here: https://github.com/Chik3r/TerrariaNoRangePylon
 
+v0.3: Updated to new pylon code, fixes issue where the mod doesn't work
 v0.2: Now able to change the amount of NPCs needed to be able to teleport to the pylon
 v0.1: Initial release
