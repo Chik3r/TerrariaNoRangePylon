@@ -104,10 +104,10 @@ namespace TerrariaNoRangePylon
 
 			if (!c.TryGotoNext(MoveType.After,
 				    i => i.MatchLdloc(0),
-				    i => i.MatchLdloc(9),
+				    i => i.MatchLdloc(out _),
 				    i => i.MatchLdfld<TeleportPylonInfo>("PositionInTiles"),
 				    i => i.MatchLdfld<Point16>("X"),
-				    i => i.MatchLdloc(9),
+				    i => i.MatchLdloc(out _),
 				    i => i.MatchLdfld<TeleportPylonInfo>("PositionInTiles"),
 				    i => i.MatchLdfld<Point16>("Y"),
 				    i => i.MatchCallvirt<Player>("InInteractionRange"))) {
