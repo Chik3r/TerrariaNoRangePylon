@@ -53,8 +53,16 @@ namespace TerrariaNoRangePylon
 				return;
 			}
 
+			MethodInfo getInstanceMethod = typeof(ModContent).GetMethod(nameof(ModContent.GetInstance), BindingFlags.Instance | BindingFlags.Public);
+			MethodInfo genericGetInstanceMethod = getInstanceMethod?.MakeGenericMethod(typeof(PylonConfig));
+			if (genericGetInstanceMethod is null) {
+				Logger.Error($"Failed to get generic method for {nameof(ModContent.GetInstance)}");
+				return;
+			}
+
 			c.Emit(OpCodes.Pop);
-			c.EmitDelegate(() => ModContent.GetInstance<PylonConfig>().RequiredNPCCount);
+			c.Emit(OpCodes.Call, genericGetInstanceMethod);
+			c.Emit(OpCodes.Ldfld, typeof(PylonConfig).GetField(nameof(PylonConfig.RequiredNPCCount)));
 		}
 		
 		private void ILHandleTeleportNPCCount(ILContext il)
