@@ -2,6 +2,7 @@ This mod makes it so that you can teleport to a pylon without needing to be near
 
 You can see this mod's source code here: https://github.com/Chik3r/TerrariaNoRangePylon
 
+v0.4: Let's you disable teleporting to pylons from anywhere in the world. Also fixes some bugs.
 v0.3.2: Build for tML 1.4-stable branch
 v0.3.1: Fix small issue preventing in-range IL edit from working
 v0.3: Updated to new pylon code, fixes issue where the mod doesn't work
