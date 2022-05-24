@@ -118,7 +118,7 @@ namespace TerrariaNoRangePylon
 				    i => i.MatchLdcR4(2),
 				    i => i.MatchNewobj<Vector2>(),
 				    i => i.MatchCall<Vector2>("op_Addition"),
-				    i => i.MatchLdloc(4))) {
+				    i => i.MatchLdloc(out _))) {
 				Logger.Warn("Failed to IL edit ILPylonMapColor");
 				return;
 			}
