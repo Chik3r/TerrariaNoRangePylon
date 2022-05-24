@@ -16,7 +16,7 @@ namespace TerrariaNoRangePylon
 		public override void Load()
 		{
 			if (ModContent.GetInstance<PylonConfig>().OverrideRequiredNPCs)
-				IL.Terraria.GameContent.TeleportPylonsSystem.HowManyNPCsDoesPylonNeed += ILNPCPylonCount;
+				OnTeleportPylonsSystem.HowManyNPCsDoesPylonNeed += OnNPCPylonCount;
 			else
 				IL.Terraria.GameContent.TeleportPylonsSystem.HandleTeleportRequest += ILHandleTeleportNPCCount;
 
@@ -29,36 +29,14 @@ namespace TerrariaNoRangePylon
 
 		private bool OnPlayerNearAPylon(OnTeleportPylonsSystem.orig_IsPlayerNearAPylon orig, Player player) => true;
 
-		private void ILNPCPylonCount(ILContext il)
-		{
-			/*
-			 * IL_0000: ldarg.1
-			 * IL_0001: ldfld valuetype Terraria.GameContent.TeleportPylonType Terraria.GameContent.TeleportPylonInfo::TypeOfPylon
-			 * IL_0006: ldc.i4.8
-			 * IL_0007: beq.s IL_000b
-
-			 * IL_0009: ldc.i4.2
-			 * INSERT:  pop
-			 * INSERT   delegate to npc count
-			 * IL_000a: ret
-			 */
-
-			ILCursor c = new(il);
-
-			if (!c.TryGotoNext(MoveType.After,
-				i => i.MatchLdarg(1),
-				i => i.MatchLdfld(typeof(TeleportPylonInfo).GetField("TypeOfPylon")),
-				i => i.MatchLdcI4(8),
-				i => i.MatchBeq(out _),
-				i => i.MatchLdcI4(2))) {
-				Logger.Warn("Failed to IL edit HowManyNPCsDoesPylonNeed");
-				return;
+		private int OnNPCPylonCount(OnTeleportPylonsSystem.orig_HowManyNPCsDoesPylonNeed orig, TeleportPylonsSystem self, TeleportPylonInfo info, Player player) {
+			if (info.TypeOfPylon == TeleportPylonType.Victory) {
+				return 0;
 			}
-
-			c.Emit(OpCodes.Pop);
-			c.EmitDelegate(() => ModContent.GetInstance<PylonConfig>().RequiredNPCCount);
+			
+			return ModContent.GetInstance<PylonConfig>().RequiredNPCCount;
 		}
-		
+
 		private void ILHandleTeleportNPCCount(ILContext il)
 		{
 			/*
