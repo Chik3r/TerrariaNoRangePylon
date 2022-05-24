@@ -9,8 +9,8 @@ namespace TerrariaNoRangePylon
 		
 		[Header("Teleportation from anywhere")]
 		[Label("Enable pylon teleportation from anywhere")]
-		[Tooltip("Enables pylon teleportation from anywhere on the map.\n" +
-		         "NPC overriding will still work even if this setting is disabled.")]
+		[Tooltip("Enables pylon teleportation from anywhere in the world.\n" +
+		         "NPC count overriding will still work even if this setting is disabled.")]
 		[DefaultValue(true)]
 		[ReloadRequired]
 		public bool OverrideTeleportAnywhere;
