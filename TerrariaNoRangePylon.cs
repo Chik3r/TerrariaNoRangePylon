@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
@@ -14,15 +15,16 @@ namespace TerrariaNoRangePylon
 	{
 		public override void Load()
 		{
-			On.Terraria.GameContent.TeleportPylonsSystem.IsPlayerNearAPylon += OnPlayerNearAPylon;
-
 			if (ModContent.GetInstance<PylonConfig>().OverrideRequiredNPCs)
 				IL.Terraria.GameContent.TeleportPylonsSystem.HowManyNPCsDoesPylonNeed += ILNPCPylonCount;
 			else
 				IL.Terraria.GameContent.TeleportPylonsSystem.HandleTeleportRequest += ILHandleTeleportNPCCount;
 
-			IL.Terraria.GameContent.TeleportPylonsSystem.HandleTeleportRequest += ILHandlePlayerPylonRange;
-			IL.Terraria.Map.TeleportPylonsMapLayer.Draw += ILPylonMapColor;
+			if (ModContent.GetInstance<PylonConfig>().OverrideTeleportAnywhere) {
+				On.Terraria.GameContent.TeleportPylonsSystem.IsPlayerNearAPylon += OnPlayerNearAPylon;
+				IL.Terraria.GameContent.TeleportPylonsSystem.HandleTeleportRequest += ILHandlePlayerPylonRange;
+				IL.Terraria.Map.TeleportPylonsMapLayer.Draw += ILPylonMapColor;
+			}
 		}
 
 		private bool OnPlayerNearAPylon(OnTeleportPylonsSystem.orig_IsPlayerNearAPylon orig, Player player) => true;

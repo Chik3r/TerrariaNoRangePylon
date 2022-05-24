@@ -6,16 +6,24 @@ namespace TerrariaNoRangePylon
 	public class PylonConfig : ModConfig
 	{
 		public override ConfigScope Mode => ConfigScope.ServerSide;
+		
+		[Header("Teleportation from anywhere")]
+		[Label("Enable pylon teleportation from anywhere")]
+		[Tooltip("Enables pylon teleportation from anywhere on the map.\n" +
+		         "NPC overriding will still work even if this setting is disabled.")]
+		[DefaultValue(true)]
+		[ReloadRequired]
+		public bool OverrideTeleportAnywhere;
 
 		[Header("Required NPCs for pylon")]
 		[Label("Override the required number of NPCs")]
-		[Tooltip("Override the required number of NPCs to be able to teleport to the pylon")]
+		[Tooltip("Override the required number of NPCs to be able to teleport to the pylon.")]
 		[DefaultValue(false)]
 		[ReloadRequired]
 		public bool OverrideRequiredNPCs;
 		
 		[Label("Number of required NPCs")]
-		[Tooltip("The number of NPCs required to teleport to this pylon")]
+		[Tooltip("The number of NPCs required to teleport to this pylon.")]
 		[DefaultValue(2)]
 		[Range(0, 10)]
 		[DrawTicks]
