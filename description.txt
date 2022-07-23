@@ -1,10 +1,12 @@
-This mod makes it so that you can teleport to a pylon without needing to be near a pylon. There is also a config option to remove or change the required npc count to teleport.
+This mod allows you to teleport to pylons without needing to be near a pylon. It can also override other pylon limits.
+With the latest update, it should work with pylons added by other mods, as long as they have updated to the new tModLoader code.
+
+The limits this mod can override are the following:
+ - Distance limit: Will allow you to teleport to a pylon even if you aren't near them.
+ - NPC count: Lets you teleport while ignoring the required number of NPCs near the pylon.
+ - Type limit: Will allow you to place any amount of pylons of any type.
+ - Biome limit: Ignores the biome requirements of the pylon.
+ - Danger check: Will ignore any dangers (invasions) in the world.
+All of this can be configured from the mod's config.
 
 You can see this mod's source code here: https://github.com/Chik3r/TerrariaNoRangePylon
-
-v0.4: Let's you disable teleporting to pylons from anywhere in the world. Also fixes some bugs.
-v0.3.2: Build for tML 1.4-stable branch
-v0.3.1: Fix small issue preventing in-range IL edit from working
-v0.3: Updated to new pylon code, fixes issue where the mod doesn't work
-v0.2: Now able to change the amount of NPCs needed to be able to teleport to the pylon
-v0.1: Initial release
