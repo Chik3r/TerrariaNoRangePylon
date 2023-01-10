@@ -2,7 +2,7 @@ This mod allows you to teleport to pylons without needing to be near a pylon. It
 With the latest update, it should work with pylons added by other mods, as long as they have updated to the new tModLoader code.
 
 The limits this mod can override are the following:
- - Distance limit: Will allow you to teleport to a pylon even if you aren't near them.
+ - Distance limit: Will allow you to teleport to a pylon even if you aren't near them. You can either set the distance limit to infinity, or to a custom value between 0 and 1000 blocks.
  - NPC count: Lets you teleport while ignoring the required number of NPCs near the pylon.
  - Type limit: Will allow you to place any amount of pylons of any type.
  - Biome limit: Ignores the biome requirements of the pylon.

@@ -1,6 +1,1 @@
-﻿With this new release, "Teleport to pylons from anywhere!" should work with updated mods implementing the ModPylon class. This will allow the mod to modify pylon requirements of any mod creating custom pylons.
-
-The mod also offers 3 new config options:
- - Overriding the type limit: Will allow you to place any amount of pylons of any type.
- - Overriding the biome limit: Will ignore the biome requirements of the pylon.
- - Overriding the danger check: Will ignore any dangers (invasions) in the world.
+﻿You can now adjust the range limit of pylons to a custom range (in blocks) or up to an infinite range (how it worked previously)
