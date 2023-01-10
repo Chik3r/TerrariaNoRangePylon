@@ -1,3 +1,5 @@
+using System.Linq;
+using Microsoft.Xna.Framework;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Terraria;
@@ -18,7 +20,13 @@ namespace TerrariaNoRangePylon
 			}
 		}
 
-		private bool OnPlayerNearAPylon(OnTeleportPylonsSystem.orig_IsPlayerNearAPylon orig, Player player) => true;
+		private bool OnPlayerNearAPylon(OnTeleportPylonsSystem.orig_IsPlayerNearAPylon orig, Player player) {
+			if (Config.InfinitePylonRange)
+				return true;
+
+			return Main.PylonSystem.Pylons.Any(pylonInfo =>
+				Vector2.Distance(player.Center, pylonInfo.PositionInTiles.ToWorldCoordinates()) < (Config.CustomPylonRange * 16));
+		}
 
 		private void ILHandlePlayerPylonRange(ILContext il) {
 			/*
