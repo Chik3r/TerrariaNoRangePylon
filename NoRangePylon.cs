@@ -5,32 +5,34 @@ using Terraria.ModLoader;
 namespace TerrariaNoRangePylon; 
 
 public class NoRangePylon : GlobalPylon {
-	public override bool? ValidTeleportCheck_PreNPCCount(TeleportPylonInfo pylonInfo, ref int defaultNecessaryNPCCount) {
+	private static PylonConfig Config => ModContent.GetInstance<PylonConfig>();
+	
+	public override bool? ValidTeleportCheck_PreNPCCount(TeleportPylonInfo pylonInfo, ref int defaultNecessaryNpcCount) {
 		if (pylonInfo.TypeOfPylon == TeleportPylonType.Victory)
 			return null;
 
-		if (ModContent.GetInstance<PylonConfig>().OverrideRequiredNPCs)
-			defaultNecessaryNPCCount = ModContent.GetInstance<PylonConfig>().RequiredNPCCount;
+		if (Config.OverrideRequiredNPCs)
+			defaultNecessaryNpcCount = Config.RequiredNPCCount;
 			
-		return base.ValidTeleportCheck_PreNPCCount(pylonInfo, ref defaultNecessaryNPCCount);
+		return base.ValidTeleportCheck_PreNPCCount(pylonInfo, ref defaultNecessaryNpcCount);
 	}
 
 	public override bool? ValidTeleportCheck_PreAnyDanger(TeleportPylonInfo pylonInfo) {
-		if (ModContent.GetInstance<PylonConfig>().OverrideDangerLimit)
+		if (Config.OverrideDangerLimit)
 			return true;
 		
 		return base.ValidTeleportCheck_PreAnyDanger(pylonInfo);
 	}
 
 	public override bool? ValidTeleportCheck_PreBiomeRequirements(TeleportPylonInfo pylonInfo, SceneMetrics sceneData) {
-		if (ModContent.GetInstance<PylonConfig>().OverrideBiomeLimit)
+		if (Config.OverrideBiomeLimit)
 			return true;
 		
 		return base.ValidTeleportCheck_PreBiomeRequirements(pylonInfo, sceneData);
 	}
 
 	public override bool? PreCanPlacePylon(int x, int y, int tileType, TeleportPylonType pylonType) {
-		if (ModContent.GetInstance<PylonConfig>().OverrideTypeLimit)
+		if (Config.OverrideTypeLimit)
 			return true;
 		
 		return base.PreCanPlacePylon(x, y, tileType, pylonType);

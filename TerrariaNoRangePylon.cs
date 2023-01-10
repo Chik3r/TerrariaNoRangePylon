@@ -9,8 +9,10 @@ using OnTeleportPylonsSystem = On.Terraria.GameContent.TeleportPylonsSystem;
 namespace TerrariaNoRangePylon
 {
 	public class TerrariaNoRangePylon : Mod {
+		private static PylonConfig Config => ModContent.GetInstance<PylonConfig>();
+		
 		public override void Load() {
-			if (ModContent.GetInstance<PylonConfig>().OverrideTeleportAnywhere) {
+			if (Config.OverrideTeleportAnywhere) {
 				On.Terraria.GameContent.TeleportPylonsSystem.IsPlayerNearAPylon += OnPlayerNearAPylon;
 				IL.Terraria.GameContent.TeleportPylonsSystem.HandleTeleportRequest += ILHandlePlayerPylonRange;
 			}
