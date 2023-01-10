@@ -20,7 +20,7 @@ namespace TerrariaNoRangePylon
 		public bool InfinitePylonRange;
 		
 		[Label("Set the range limit to a custom distance")]
-		[Tooltip("Allows you to use pylons from a custom distance (in blocks).\nThis requires the first option to be enabled.\nIt will be ignored if the range limit is set to infinity.")]
+		[Tooltip("Allows you to use pylons from a custom distance (in blocks).\nThis requires the first option to be enabled.\nThis setting will be ignored if the range limit is set to infinity.")]
 		[DefaultValue(40)]
 		[Range(0, 1000)]
 		[Increment(20)]
