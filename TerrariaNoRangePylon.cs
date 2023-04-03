@@ -6,7 +6,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ModLoader;
-using OnTeleportPylonsSystem = On.Terraria.GameContent.TeleportPylonsSystem;
 
 namespace TerrariaNoRangePylon
 {
@@ -15,12 +14,12 @@ namespace TerrariaNoRangePylon
 		
 		public override void Load() {
 			if (Config.OverrideTeleportAnywhere) {
-				On.Terraria.GameContent.TeleportPylonsSystem.IsPlayerNearAPylon += OnPlayerNearAPylon;
-				IL.Terraria.GameContent.TeleportPylonsSystem.HandleTeleportRequest += ILHandlePlayerPylonRange;
+				On_TeleportPylonsSystem.IsPlayerNearAPylon += OnPlayerNearAPylon;
+				IL_TeleportPylonsSystem.HandleTeleportRequest += ILHandlePlayerPylonRange;
 			}
 		}
 
-		private bool OnPlayerNearAPylon(OnTeleportPylonsSystem.orig_IsPlayerNearAPylon orig, Player player) {
+		private bool OnPlayerNearAPylon(On_TeleportPylonsSystem.orig_IsPlayerNearAPylon orig, Player player) {
 			if (Config.InfinitePylonRange)
 				return true;
 
@@ -30,18 +29,19 @@ namespace TerrariaNoRangePylon
 
 		private void ILHandlePlayerPylonRange(ILContext il) {
 			/*
-			 * // if (!player.InInteractionRange(info2.PositionInTiles.X, info2.PositionInTiles.Y))
-			 * IL_012d: ldloc.0
-			 * IL_012e: ldloc.s 9
-			 * IL_0130: ldfld valuetype Terraria.DataStructures.Point16 Terraria.GameContent.TeleportPylonInfo::PositionInTiles
-			 * IL_0135: ldfld int16 Terraria.DataStructures.Point16::X
-			 * IL_013a: ldloc.s 9
-			 * IL_013c: ldfld valuetype Terraria.DataStructures.Point16 Terraria.GameContent.TeleportPylonInfo::PositionInTiles
-			 * IL_0141: ldfld int16 Terraria.DataStructures.Point16::Y
-			 * IL_0146: callvirt instance bool Terraria.Player::InInteractionRange(int32, int32)
+			 * // if (!player.InInteractionRange(teleportPylonInfo.PositionInTiles.X, teleportPylonInfo.PositionInTiles.Y, TileReachCheckSettings.Pylons))
+			 * IL_017f: ldloc.0
+			 * IL_0180: ldloc.s 14
+			 * IL_0182: ldfld valuetype Terraria.DataStructures.Point16 Terraria.GameContent.TeleportPylonInfo::PositionInTiles
+			 * IL_0187: ldfld int16 Terraria.DataStructures.Point16::X
+			 * IL_018c: ldloc.s 14
+			 * IL_018e: ldfld valuetype Terraria.DataStructures.Point16 Terraria.GameContent.TeleportPylonInfo::PositionInTiles
+			 * IL_0193: ldfld int16 Terraria.DataStructures.Point16::Y
+			 * IL_0198: call valuetype Terraria.DataStructures.TileReachCheckSettings Terraria.DataStructures.TileReachCheckSettings::get_Pylons()
+			 * IL_019d: callvirt instance bool Terraria.Player::InInteractionRange(int32, int32, valuetype Terraria.DataStructures.TileReachCheckSettings)
 			 * INSERT: pop
 			 * INSERT: ldc.i4.1
-			 * IL_014b: brfalse IL_01d5
+			 * IL_01a2: brfalse IL_022e
 			 */
 			
 			ILCursor c = new(il);
@@ -54,6 +54,7 @@ namespace TerrariaNoRangePylon
 				    i => i.MatchLdloc(out _),
 				    i => i.MatchLdfld<TeleportPylonInfo>("PositionInTiles"),
 				    i => i.MatchLdfld<Point16>("Y"),
+				    i => i.MatchCall<TileReachCheckSettings>("get_Pylons"),
 				    i => i.MatchCallvirt<Player>("InInteractionRange"))) {
 				Logger.Warn("Failed to IL edit ILHandlePlayerPylonRange");
 				return;
