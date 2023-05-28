@@ -1,4 +1,4 @@
 displayName = Teleport to pylons from anywhere!
 author = Chik3r
-version = 0.6.1
+version = 0.6.2
 homepage=https://github.com/Chik3r/TerrariaNoRangePylon

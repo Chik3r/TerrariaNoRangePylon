@@ -1,0 +1,58 @@
+Configs: {
+	PylonConfig: {
+		DisplayName: Pylon Config
+
+		Headers: {
+			OverridePylonRange: Override pylon range
+			RequiredNPCsForPylon: Required NPCs for pylon
+			LimitNumberOfPylons: Limit number of pylons
+			BiomeLimit: Biome limit
+			DangerLimit: Danger limit
+		}
+
+		OverrideTeleportAnywhere: {
+			Label: Enable pylon teleportation from a custom distance
+			Tooltip: Allows you to teleport to pylons without being next to them.
+		}
+
+		InfinitePylonRange: {
+			Label: Set the range limit to infinity
+			Tooltip: Allows you to use pylons from any distance. This requires the first option to be enabled.
+		}
+
+		CustomPylonRange: {
+			Label: Set the range limit to a custom distance
+			Tooltip:
+				'''
+				Allows you to use pylons from a custom distance (in blocks).
+				This requires the first option to be enabled.
+				This setting will be ignored if the range limit is set to infinity.
+				'''
+		}
+
+		OverrideRequiredNPCs: {
+			Label: Override the required number of NPCs
+			Tooltip: Override the required number of NPCs to be able to teleport to the pylon.
+		}
+
+		RequiredNPCCount: {
+			Label: Number of required NPCs
+			Tooltip: The number of NPCs required to teleport to this pylon.
+		}
+
+		OverrideTypeLimit: {
+			Label: Disable the limit on the number of pylons
+			Tooltip: Disables the limit that only allows one of each type of pylon.
+		}
+
+		OverrideBiomeLimit: {
+			Label: Disable the biome check
+			Tooltip: This will allow you to teleport to pylons that are placed in any biome.
+		}
+
+		OverrideDangerLimit: {
+			Label: Disable the danger checks
+			Tooltip: Allows you to teleport to pylons while ignoring any active invasions or other dangers.
+		}
+	}
+}
